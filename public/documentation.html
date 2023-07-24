@@ -12,9 +12,154 @@
   <body>
     <h1>Documentation myFlix App</h1>
     <p>
-      myFlix is a "movies" web application that will allow users to look for information about movies, directors, and genres. 
-      Users can sign up, creating their own account, then update their personal information, and create a list of their favorite
-      movies.
+      MyFlix is a web application for movies that allows users to search for
+      information about movies, directors, and genres. Users can sign up,
+      creating their own account, update their personal information, and create
+      a list of their favorite movies. They are also allowed to delete their
+      accounts and movies from their favorites.
     </p>
+
+    <table>
+      <thead>
+        <tr>
+          <td>Business Logic</td>
+          <td>URL</td>
+          <td>HTTP Method</td>
+          <td>Path Variables</td>
+          <td>Request body data format</td>
+          <td>Response body data format</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Return a list of ALL movies to the user</td>
+          <td>/movies</td>
+          <td>GET/READ</td>
+          <td>None</td>
+          <td>None</td>
+          <td>A JSON object holding data about all movies</td>
+        </tr>
+        <tr>
+          <td>
+            Return data (description, genre, director, image URL, whether it is
+            featured or not) about a single movie by title to the user
+          </td>
+          <td>/movies/:movieTitle</td>
+          <td>GET/READ</td>
+          <td>[movieTitle]</td>
+          <td>None</td>
+          <td>
+            {
+              Title: "movieTitle"
+              Year: "YYYY"
+              Image: "URL leading to an image of the movie cover"
+              Description: "Brief description of the movie"
+              Directors:
+                  [
+                      {
+                          Name: "firstName lastName",
+                          Birth: "YYYY",
+                          Death: "YYYY",
+                          Bio: "Biographical description of director"
+                      },
+                      {
+                          Name: "firstName lastName",
+                          Birth: "YYYY",
+                          Death: "YYYY",
+                          Bio: "Biographical description of director"
+                      }
+                  ]
+              Genres:
+                  [
+                      {
+                          Name: "genreName",
+                          "Description": "Description of genreName"
+                      },
+                      {
+                          Name: "genreName",
+                          Description: "Description of genreName"
+                      }
+                  ]
+          }
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Return data about a genre (description) by name/title (e.g., “Thriller”)
+          </td>
+          <td>/movies/genre/:genreName</td>
+          <td>GET/READ</td>
+          <td>[genreName]</td>
+          <td>None</td>
+          <td>
+            { Name: "genreName", Description: "Description of genreName" }
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Return data about a director (bio, birth year, death year) by name
+          </td>
+          <td>/movies/directors/:directorName</td>
+          <td>GET/READ</td>
+          <td>[directorName]</td>
+          <td>None</td>
+          <td>
+            { Name: "firstName lastName", Birth: "YYYY", Death: "YYYY", Bio: "Biographical description of director" }
+          </td>
+        </tr>
+        <tr>
+          <td>Allow new users to register</td>
+          <td>/users</td>
+          <td>POST/CREATE</td>
+          <td>None</td>
+          <td>
+            { id: "", name: "firstName lastName", favoriteMovies: [array of favorite movies] }
+          </td>
+          <td>
+            { id: "unique randomly generated identification", name: "firstName lastName", "favoriteMovies": [array of favorite movies] }
+          </td>
+        </tr>
+        <tr>
+          <td>Allow users to update their user info (username)</td>
+          <td>/users/:id</td>
+          <td>PUT/UPDATE</td>
+          <td>[id]</td>
+          <td>{ "name": "newUserName" }</td>
+          <td>
+            { id: "usersID", name: "newUserName", favoriteMovies: [array of favorite movies] }
+          </td>
+        </tr>
+        <tr>
+          <td>Allow users to add a movie to their list of favorites</td>
+          <td>/users/:id/:movieTitle</td>
+          <td>POST/CREATE</td>
+          <td>[id], [movieTitle]</td>
+          <td>None</td>
+          <td>
+            A text message indicating that movieTitle has been added to the
+            users favoriteMovies
+          </td>
+        </tr>
+        <tr>
+          <td>Allow users to remove a movie from their list of favorites</td>
+          <td>/users/:id/:movieTitle</td>
+          <td>DELETE/DELETE Movie</td>
+          <td>[id], [movieTitle]</td>
+          <td>none</td>
+          <td>
+            A text message indicating that movieTitle has been removed from the
+            users favoriteMovies
+          </td>
+        </tr>
+        <tr>
+          <td>Allow existing users to deregister</td>
+          <td>/users/:id</td>
+          <td>DELETE/DELETE User Account</td>
+          <td>[id]</td>
+          <td>none</td>
+          <td>A text message indicating that the user has been deleted</td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
