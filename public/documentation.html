@@ -53,34 +53,28 @@
               Title: "movieTitle"
               Year: "YYYY"
               Image: "URL leading to an image of the movie cover"
+              Genre:
+                  [
+                    {
+                      Name: "genreName",
+                      "Description": "Description of genreName"
+                    },
+                    {
+                      Name: "genreName",
+                      Description: "Description of genreName"
+                    }
+                  ]
               Description: "Brief description of the movie"
               Directors:
                   [
-                      {
-                          Name: "firstName lastName",
-                          Birth: "YYYY",
-                          Death: "YYYY",
-                          Bio: "Biographical description of director"
-                      },
-                      {
-                          Name: "firstName lastName",
-                          Birth: "YYYY",
-                          Death: "YYYY",
-                          Bio: "Biographical description of director"
-                      }
+                    {
+                      Name: "firstName lastName",
+                      Birthyear: "YYYY",
+                      Deathyear: "YYYY",
+                      Bio: "Biographical description of director"
+                    }
                   ]
-              Genres:
-                  [
-                      {
-                          Name: "genreName",
-                          "Description": "Description of genreName"
-                      },
-                      {
-                          Name: "genreName",
-                          Description: "Description of genreName"
-                      }
-                  ]
-          }
+            }
           </td>
         </tr>
         <tr>
@@ -104,7 +98,7 @@
           <td>[directorName]</td>
           <td>None</td>
           <td>
-            { Name: "firstName lastName", Birth: "YYYY", Death: "YYYY", Bio: "Biographical description of director" }
+            { Name: "firstName lastName", Birthyear: "YYYY", Deathyear: "YYYY", Bio: "Biographical description of director" }
           </td>
         </tr>
         <tr>
@@ -116,7 +110,7 @@
             { id: "", name: "firstName lastName", favoriteMovies: [array of favorite movies] }
           </td>
           <td>
-            { id: "unique randomly generated identification", name: "firstName lastName", "favoriteMovies": [array of favorite movies] }
+            { userid: "unique randomly generated identification", username: "firstName", birthday: "YYYY-MM-DD", email: "email", "favoriteMovies": [array of favorite movies] }
           </td>
         </tr>
         <tr>
