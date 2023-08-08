@@ -15,7 +15,7 @@ let users = [
     username: "Kim",
     birthday: "1993-05-15",
     email: "kim@gmail.com",
-    favoriteMovies: "Home Alone"
+    favoriteMovies: "The mask"
   },
   {
     userid: 2,
@@ -31,13 +31,13 @@ let users = [
     email: "james@gmail.com",
     favoriteMovies: "Harry Potter and the Philosopher's Stone"
   },
-  {
-    userid: 4,
-    username: "Emily",
-    birthday: "1992-08-03",
-    email: "emily@gmail.com",
-    favoriteMovies: "Bridget Jones's Baby"
-  },
+  // {
+  //   userid: 4,
+  //   username: "Emily",
+  //   birthday: "1992-08-03",
+  //   email: "emily@gmail.com",
+  //   favoriteMovies: "Bridget Jones's Baby"
+  // },
   {
     userid: 5,
     username: "David",
@@ -53,6 +53,7 @@ let movies =
   {
     Title: "Harry Potter and the Philosopher's Stone",
     Year: "2001",
+    Image: "https://w.forfun.com/fetch/65/650a89610bd21be3a615fa8f866a731e.jpeg",
     Genre: 
       [
         {
@@ -64,17 +65,18 @@ let movies =
           Description: "Adventure movies contain many of the same features of action movies, but are usually set in exotic locations. The main theme is adventure, with the characters often exploring places they have not been before or doing things they have not done before. (Source: Wikipedia)",
         }
       ],
-    Description: "An 11-year-old orphan living with his unwelcoming aunt, uncle, and cousin, who learns of his own fame as a wizard known to have survived his parents' murder at the hands of the dark wizard Lord Voldemort as an infant when he is accepted to Hogwarts School of Witchcraft and Wizardry. (Source: Wikipedia)",
+    Description: "An 11-year-old orphan living with his unwelcoming aunt, uncle, and cousin, who learns of his own fame as a wizard known to have survived his parents' murder at the hands of the dark wizard Lord Voldemort as an infant when he is accepted to Hogwarts School of Witchcraft and Wizardry.  Harry makes close friends and a few enemies during his first year at the school and with the help of his friends, Ron Weasley and Hermione Granger, he faces an attempted comeback by the dark wizard Lord Voldemort. (Source: Wikipedia)",
     Directors: 
         { Name: "Chris Columbus",
           Birthyear: "1958",
           Deathyear: "-",
-          Bio: "Chris Joseph Columbus is an American filmmaker. Born in Spangler, Pennsylvania, Columbus studied film at Tisch School of the Arts where he developed an interest in filmmaking. (Source: Wikipedia)",
+          Bio: "Chris Joseph Columbus is an American filmmaker. Born in Spangler, Pennsylvania, Columbus studied film at Tisch School of the Arts where he developed an interest in filmmaking. The comedy Mrs. Doubtfire (1993), starring Robin Williams, was another box office success for Columbus. (Source: Wikipedia)",
         },
   },
   {
     Title: "Home Alone",
     Year: "1990",
+    Image: "https://images-na.ssl-images-amazon.com/images/I/51Gnbsy8IML.jpg",
     Genre:
         {
           Name: "Comedy",
@@ -92,6 +94,7 @@ let movies =
   {
     Title: "Maleficent",
     Year: "2014",
+    Image: "https://www.imdb.com/title/tt4777008/mediaviewer/rm3549991681/?ref_=tt_ov_i",
     Genre: 
       [
         {
@@ -115,6 +118,7 @@ let movies =
   {
     Title: "Bridget Jones's Baby",
     Year: "2016",
+    Image: "https://www.miramax.com/assets/bjb_digital_artt.jpg",
     Genre:
       [
         {
@@ -138,6 +142,7 @@ let movies =
   {
     Title: "Fantastic Beasts: The Crimes of Grindelwald",
     Year: "2018",
+    Image: "https://upload.wikimedia.org/wikipedia/en/3/3c/Fantastic_Beasts_-_The_Crimes_of_Grindelwald_Poster.png",
     Genre: 
       [
         {
@@ -161,6 +166,7 @@ let movies =
   {
     Title: "Casper",
     Year: "1995",
+    Image: "https://m.media-amazon.com/images/I/71QInfg9JCL._AC_UF894,1000_QL80_.jpg",
     Genre: 
         {
           Name: "Fantasy",
@@ -178,6 +184,7 @@ let movies =
   {
     Title: "Jumanji",
     Year: "1995",
+    Image: "https://nicevintageco.com/cdn/shop/products/DesignohneTitel-585_x500@2x.jpg?v=1673627308",
     Genre: 
       [
         {
@@ -201,6 +208,7 @@ let movies =
   {
     Title: "Star Wars: Episode II - Attack of the Clones",
     Year: "2002",
+    Image: "https://static.wikia.nocookie.net/starwars/images/9/98/Aotctpb.jpg/revision/latest?cb=20110206033257",
     Genre: 
         {
           Name: "Sci-Fi",
@@ -218,6 +226,7 @@ let movies =
   {
     Title: "Pride and prejudice",
     Year: "2005",
+    Image: "https://cdn.shopify.com/s/files/1/0308/7889/2172/t/13/assets/description_image_pp5poster.jpg?v=1595757076",
     Genre: 
         {
           Name: "Romance",
@@ -235,6 +244,7 @@ let movies =
   {
     Title: "The mask",
     Year: "1994",
+    Image: "https://image.tmdb.org/t/p/original/xbbXp9px4o8Oe7IbGd0yIbla8mZ.jpg",
     Genre: 
       [
         {
@@ -258,6 +268,7 @@ let movies =
   {
     Title: "Edward Scissorhands",
     Year: "1990",
+    Image: "https://lumiere-a.akamaihd.net/v1/images/esh25_584x800_022aaeef.jpeg?region=0%2C0%2C584%2C800",
     Genre: 
         {
           Name: "Fantasy",
