@@ -13,21 +13,38 @@ let users = [
   {
     userid: 1,
     username: "Kim",
+    birthday: "1993-05-15",
     email: "kim@gmail.com",
-    favoriteMovies: "Home Alone",
+    favoriteMovies: "Home Alone"
   },
   {
     userid: 2,
     username: "Joe",
+    birthday: "1995-09-22",
     email: "joe@gmail.com",
-    favoriteMovies: "Maleficent",
+    favoriteMovies: "Maleficent"
   },
   {
     userid: 3,
     username: "James",
+    birthday: "1987-12-10",
     email: "james@gmail.com",
-    favoriteMovies: "Harry Potter and the Philosopher's Stone",
+    favoriteMovies: "Harry Potter and the Philosopher's Stone"
   },
+  {
+    userid: 4,
+    username: "Emily",
+    birthday: "1992-08-03",
+    email: "emily@gmail.com",
+    favoriteMovies: "Bridget Jones's Baby"
+  },
+  {
+    userid: 5,
+    username: "David",
+    birthday: "1989-04-28",
+    email: "david@gmail.com",
+    favoriteMovies: "Casper"
+  }
 ];
 
 let movies = 
