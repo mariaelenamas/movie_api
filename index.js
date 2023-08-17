@@ -17,13 +17,21 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-let users = [
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+require('./passport');
+
+// Not used here, updated directly in MongoDB
+let users = 
+
+[
   {
     userid: 1,
     username: "Kim",
     birthday: "1993-05-15",
     email: "kim@gmail.com",
-    favoriteMovies: "The mask"
+    favoriteMovies: "Bridget Jones's Baby"
   },
   {
     userid: 2,
@@ -39,13 +47,14 @@ let users = [
     email: "james@gmail.com",
     favoriteMovies: "Harry Potter and the Philosopher's Stone"
   },
-  // {
-  //   userid: 4,
-  //   username: "Emily",
-  //   birthday: "1992-08-03",
-  //   email: "emily@gmail.com",
-  //   favoriteMovies: "Bridget Jones's Baby"
-  // },
+  // Emily deleted in MongoDB
+  {
+    userid: 4,
+    username: "Emily",
+    birthday: "1992-08-03",
+    email: "emily@gmail.com",
+    favoriteMovies: "Bridget Jones's Baby"
+  },
   {
     userid: 5,
     username: "David",
@@ -293,12 +302,7 @@ let movies =
   },
 ];
 
-// READ "Welcome" - GET requests
-app.get("/", (req, res) => {
-  res.send("Welcome to my Movie App!");
-});
-
-// CREATE Add a user
+// CREATE Add a user, Allow new users to register
 /* We’ll expect JSON in this format
 {
   ID: Integer,
@@ -312,7 +316,7 @@ app.post('/users', async (req, res) => {
   await Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.Username + 'already exists');
+        return res.status(400).send(req.body.Username + ' already exists.');
       } else {
         Users
           .create({
@@ -334,19 +338,6 @@ app.post('/users', async (req, res) => {
     });
 });
 
-// CREATE Allow new users to register | TO DELETE - Old Code app.post
-// app.post("/users", (req, res) => {
-//   const newUser = req.body;
-
-//   if (newUser.name) {
-//     newUser.id = uuid.v4();
-//     users.push(newUser);
-//     res.status(201).json(newUser);
-//   } else {
-//     res.status(400).send("No such user. Users need names");
-//   }
-// });
-
 // CREATE Add a movie to a user's list of favorites
 app.post('/users/:Username/movies/:MovieID', async (req, res) => {
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
@@ -362,18 +353,15 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
   });
 });
 
-// CREATE Allow users to add a movie to their list of favorites | TO DELETE - Old code add movie to favorites
-// app.post("/users/:id/:movieTitle", (req, res) => {
-//   const { id, movieTitle } = req.params;
-//   let user = users.find((user) => user.id == id);
+// READ "Welcome" - GET requests
+app.get("/", (req, res) => {
+  res.send("Welcome to my Movie App!");
+});
 
-//   if (user) {
-//     user.favoriteMovies.push(movieTitle);
-//     res.status(200).send(`${movieTitle} has been added to user ${id}'s favorite movies list`);
-//   } else {
-//     res.status(400).send("No such user");
-//   }
-// });
+// READ "Users" - GET all users 
+app.get('/users/list', (req, res) => {
+  return res.send("You have all!")
+});
 
 // READ Return a list of ALL movies to the user
 app.get("/movies", (req, res) => {
@@ -405,6 +393,11 @@ app.get("/movies/:movieTitle", (req, res) => {
   }
 });
 
+// READ Return all genre
+app.get("/genre", (req, res) => {
+  return res.send("You have all!")
+});
+
 // READ Return data about a genre by name/title
 app.get("/movies/genre/:genreName", (req, res) => {
   const { genreName } = req.params;
@@ -417,7 +410,7 @@ app.get("/movies/genre/:genreName", (req, res) => {
   }
 });
 
-//READ Return data about a director by name
+// READ Return data about a director by name
 app.get("/movies/directors/:directorsName", (req, res) => {
   const { directorsName } = req.params;
   const directors = movies.find((movie) => movie.Directors.Name === directorsName).Directors;
@@ -428,21 +421,6 @@ app.get("/movies/directors/:directorsName", (req, res) => {
     res.status(400).send("No such Director");
   }
 });
-
-// UPDATE Allow users to update their user info (username) | TO DELETE upd users info
-// app.put("/users/:id", (req, res) => {
-//   const { id } = req.params;
-//   const updatedUser = req.body;
-
-//   let user = users.find((user) => user.id == id);
-
-//   if (user) {
-//     user.name = updatedUser.name;
-//     res.status(200).json(user);
-//   } else {
-//     res.status(400).send("No such user");
-//   }
-// });
 
 // UPDATE a user's info, by username
 /* We’ll expect JSON in this format
@@ -476,32 +454,19 @@ app.put('/users/:Username', async (req, res) => {
 });
 
 // DELETE Allow users to remove a movie from their list of favorites
-app.delete("/users/:id/:movieTitle", (req, res) => {
-  const { id, movieTitle } = req.params;
-
-  let user = users.find((user) => user.id == id);
-
-  if (user) {
-    user.favoriteMovies = user.favoriteMovies.filter((title) => title !== movieTitle);
-    res.status(200).send(`${movieTitle} has been removed from user ${id}'s array`);
-  } else {
-    res.status(400).send("No such user");
-  }
+app.delete("/users/:Username/:MovieID", async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, {
+    $pull: { FavoriteMovies: req.params.MovieID }
+  },
+  { new: true }) // This line makes sure that the updated document is returned
+ .then((updatedUser) => {
+   res.json(updatedUser);
+  })
+ .catch((err) => {
+  console.error(err);
+  res.status(500).send('Error: ' + err);
+  })
 });
-
-// DELETE Allow existing users to deregister
-// app.delete("/users/:id", (req, res) => {
-//   const { id, movieTitle } = req.params;
-
-//   let user = users.find((user) => user.id == id);
-
-//   if (user) {
-//     users = users.filter((user) => user.id != id);
-//     res.status(200).send(`User ${id} has been deleted`);
-//   } else {
-//     res.status(400).send("No such user");
-//   }
-// });
 
 // DELETE a user by username
 app.delete('/users/:Username', async (req, res) => {
@@ -522,12 +487,12 @@ app.delete('/users/:Username', async (req, res) => {
 // Setup static files (all requests route to the "public" folder)
 app.use(express.static("public"));
 
-// // Listen for requests
+// Listen for requests
 app.listen(8080, () => {
   console.log("Your app is listening on port 8080.");
 });
 
-// // Setup error handling middleware
+// Setup error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
