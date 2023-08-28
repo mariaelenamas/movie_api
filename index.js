@@ -60,9 +60,8 @@ app.post("/users/", async (req, res) => {
     });
 });
 
-// PROTECTION - READ documentation file
+// NO PROTECTION - READ documentation file
 app.get("/documentation",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const filePath = path.join(__dirname, "public", "documentation.html");
     res.sendFile(filePath, (err) => {
