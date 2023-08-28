@@ -6,7 +6,7 @@ const { check, validationResult } = require("express-validator");
 const Movies = Models.Movie;
 const Users = Models.User;
 
-//mongoose.connect("mongodb://127.0.0.1:27017/moviesapi", { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect("mongodb://127.0.0.1:27017/moviesapi", { useNewUrlParser: true, useUnifiedTopology: true });
 
 mongoose.connect("mongodb+srv://myFlixDbAdmin:JUiAhmDJGzLvGXsk@myflixdb.lpg5ppj.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -113,7 +113,7 @@ app.get("/users/:Username",
     await Users.findOne({ Username: req.params.Username })
       .then((user) => {
 
-        delete user._doc.Password // just a recommendation for the future 
+        delete user._doc.Password // Just a recommendation for the future 
         res.json(user);
       })
       .catch((err) => {
@@ -213,13 +213,12 @@ app.put("/users/:Username", passport.authenticate("jwt", { session: false }), as
     })
 });
 
-// NEW CODE!!!!!!!!!!!!!!
 app.post("/users",
   // Validation logic here for request
-  //you can either use a chain of methods like .not().isEmpty()
-  //which means "opposite of isEmpty" in plain english "is not empty"
-  //or use .isLength({min: 5}) which means
-  //minimum value of 5 characters are only allowed
+  // you can either use a chain of methods like .not().isEmpty()
+  // which means "opposite of isEmpty" in plain english "is not empty"
+  // or use .isLength({min: 5}) which means
+  // minimum value of 5 characters are only allowed
   [
     check("Username", "Username is required").isLength({ min: 5 }),
     check("Username", "Username contains non alphanumeric characters - not allowed.").isAlphanumeric(),
@@ -259,37 +258,6 @@ app.post("/users",
         res.status(500).send("Error: " + error);
       });
   });
-
-
-// NEW CODE!!!!!
-app.post("/users", async (req, res) => {
-  let hashedPassword = Users.hashPassword(req.body.Password);
-  await Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
-    .then((user) => {
-      if (user) {
-        //If the user is found, send a response that it already exists
-        return res.status(400).send(req.body.Username + " already exists");
-      } else {
-        Users
-          .create({
-            Username: req.body.Username,
-            Password: hashedPassword,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday
-          })
-          .then((user) => { res.status(201).json(user) })
-          .catch((error) => {
-            console.error(error);
-            res.status(500).send("Error: " + error);
-          });
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error: " + error);
-    });
-});
-
 
 // PROTECTION - DELETE Allow users to remove a movie from their list of favorites
 app.delete("/users/:Username/:MovieID",
@@ -332,8 +300,8 @@ app.use(express.static("public"));
 
 // Listen for requests
 const port = process.env.PORT || 8080;
-app.listen(port, "0.0.0.0",() => {
- console.log("Listening on Port " + port);
+app.listen(port, "0.0.0.0", () => {
+  console.log("Listening on Port " + port);
 });
 
 // Setup error handling middleware
