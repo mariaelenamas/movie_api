@@ -8,7 +8,7 @@ const Users = Models.User;
 
 // mongoose.connect("mongodb://127.0.0.1:27017/moviesapi", { useNewUrlParser: true, useUnifiedTopology: true });
 
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 (morgan = require("morgan")),
   (fs = require("fs")),
@@ -97,7 +97,7 @@ app.get("/users/:Username",
 
 // PROTECTION - READ Return all movies
 app.get("/movies",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     Movies.find()
       .then((movies) => {
