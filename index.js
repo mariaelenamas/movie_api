@@ -97,7 +97,7 @@ app.get("/users/:Username",
 
 // PROTECTION - READ Return all movies
 app.get("/movies",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     Movies.find()
       .then((movies) => {
