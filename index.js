@@ -45,7 +45,7 @@ app.get("/documentation",
     });
   });
 
-// PROTECTION - CREATE Add a movie to a user"s list of favorites
+// PROTECTION - CREATE Add a movie to a user's list of favorites
 app.post("/users/:Username/movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
@@ -238,6 +238,40 @@ app.delete("/users/:Username/:MovieID",
   async (req, res) => {
     await Users.findOneAndUpdate({ Username: req.params.Username }, {
       $pull: { FavoriteMovies: req.params.MovieID }
+    },
+      { new: true }) // This line makes sure that the updated document is returned
+      .then((updatedUser) => {
+        res.json(updatedUser);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      })
+  });
+
+// PROTECTION - TO ADD a movie "to watch" list 
+app.post("/users/:Username/towatch/:MovieID",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    await Users.findOneAndUpdate({ Username: req.params.Username }, {
+      $push: { ToWatch: req.params.MovieID }
+    },
+      { new: true }) // This line makes sure that the updated document is returned
+      .then((updatedUser) => {
+        res.status(200).json(updatedUser);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  });
+
+// PROTECTION - TO REMOVE a movie "to watch" list 
+app.delete("/users/:Username/towatch/:MovieID",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    await Users.findOneAndUpdate({ Username: req.params.Username }, {
+      $pull: { ToWatch: req.params.MovieID }
     },
       { new: true }) // This line makes sure that the updated document is returned
       .then((updatedUser) => {
